@@ -1,0 +1,898 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven {
+            name "NexusProxy"
+            url "https://maven.repo-ci.sfera.inno.local/repository/mbrb_acor-maven"
+            credentials {
+                username System.getProperty('gradle.wrapperUser')
+                password System.getProperty('gradle.wrapperPassword')
+            }
+        }
+        maven {
+            name "NexusSnapshot"
+            url "https://maven.repo-ci.sfera.inno.local/repository/mbrb_acor-maven-snapshot"
+            credentials {
+                username System.getProperty('gradle.wrapperUser')
+                password System.getProperty('gradle.wrapperPassword')
+            }
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenLocal()
+        maven {
+            name "NexusProxy"
+            url "https://maven.repo-ci.sfera.inno.local/repository/mbrb_acor-maven"
+            credentials {
+                username System.getProperty('gradle.wrapperUser')
+                password System.getProperty('gradle.wrapperPassword')
+            }
+        }
+        maven {
+            name "NexusSnapshot"
+            url "https://maven.repo-ci.sfera.inno.local/repository/mbrb_acor-maven-snapshot"
+            credentials {
+                username System.getProperty('gradle.wrapperUser')
+                password System.getProperty('gradle.wrapperPassword')
+            }
+        }
+    }
+}
+
+if (System.getenv("USE_GRADLE_REMOTE_CACHE") && System.getenv("USE_GRADLE_REMOTE_CACHE") == "true") {
+    buildCache {
+        local.enabled = false
+
+        remote(HttpBuildCache) {
+            enabled = true
+            url = "http://dvmbrb-${remoteCacheNode}.innodev.local/cache/"
+            push = true
+            allowInsecureProtocol = true
+        }
+        println("Remote cache enabled. Node ID: $remoteCacheNode.")
+    }
+} else {
+    println("Remote cache disabled")
+}
+
+include ':payments:batch-payment:api', ':payments:batch-payment:impl', ':payments:batch-payment:common'
+include ':mobile-banking:platform:app-update:rustore:api', ':mobile-banking:platform:app-update:rustore:impl'
+include ':mobile-banking:location:api', ':mobile-banking:location:impl'
+include ':mobile-banking:platform:whocalls:api', ':mobile-banking:platform:whocalls:impl'
+include ':mobile-banking:platform:audit-logger'
+include ':mobile-banking:portfolio-details:api', ':mobile-banking:portfolio-details:impl'
+include ':mobile-banking:rate'
+include ':mobile-banking:platform:debug-features:debug-menu:api', ':mobile-banking:platform:debug-features:debug-menu:impl'
+include ':mobile-banking:platform:ib-webview:api'
+include ':mobile-banking:platform:ib-webview:impl'
+include ':mobile-banking:platform:app-update:force:api', ':mobile-banking:platform:app-update:force:impl'
+include ':mobile-banking:session:api'
+include ':mobile-banking:session:session'
+include ':mobile-banking:platform:micro-services'
+include ':mobile-banking:platform:coresettings'
+include ':mobile-banking:platform:app-legacy'
+include ':mobile-banking:platform:android-emulator-detector:api', ':mobile-banking:platform:android-emulator-detector:impl'
+include ':mobile-banking:recognition:api', ':mobile-banking:recognition:impl'
+include ':mobile-banking:platform:maintenance:api', ':mobile-banking:platform:maintenance:impl'
+include ':mobile-banking:sms-confirmation'
+include ':mobile-banking:platform:main-page:api', ':mobile-banking:platform:main-page:impl'
+include ':mobile-banking:platform:main-products:api', ':mobile-banking:platform:main-products:impl'
+include ':core:uikit-legacy'
+include ':core:network-tearout'
+include ':core:core:api'
+include ':core:core-features'
+include ':core:analytics'
+include ':core:analytics-impl'
+include ':core:microservice-network-api'
+include ':core:core-feature-toggle:api'
+include ':core:session-facade'
+include ':core:network-okhttp'
+include ':core:globalrouter'
+include ':core:dynatrace'
+include ':core:streamhealth'
+include ':core:core-di'
+include ':core:core-settings'
+include ':core:test-utils'
+include ':core:test-kotlin-utils'
+include ':core:vtblogger'
+include ':core:lint-rules'
+include ':core:pure-module-logger'
+include ':core:caching'
+include ':core:network-rx'
+include ':core:network-common'
+include ':core:network-gson'
+include ':core:network-sse'
+include ':core:network-api'
+include ':core:network-test'
+include ':core:network:diagnostic'
+include ':core:sseclient:impl'
+include ':core:sseclient:api'
+include ':core:sseclient:network'
+include ':core:core-uikit'
+include ':core:bank-logo'
+include ':core:core-feature-toggle:impl'
+include ':core:coroutines-property'
+include ':core:coroutines-property-android'
+include ':core:core-legacy'
+include ':core:core-utils'
+include ':core:image-loader'
+include ':core:storages-lifecycle-api'
+include ':core:storages-lifecycle-impl'
+include ':core:core-hcms:api'
+include ':core:core-hcms:impl'
+include ':core:minerva-api'
+include ':core:core-secure:bizone:api', ':core:core-secure:bizone:impl'
+include ':core:core-secure:fuzzy:api', ':core:core-secure:fuzzy:impl'
+include ':core:core-secure:maalib:api', ':core:core-secure:maalib:impl'
+include ':core:core-secure:secure-prefs:api', ':core:core-secure:secure-prefs:impl'
+include ':core:core-secure:antivirus:api', ':core:core-secure:antivirus:impl'
+include ':core:uikit-compose'
+include ':core:uikit-databinding'
+include ':non-banking-services:service:api', ':non-banking-services:service:impl'
+include ':selfemployed:common-utils', ':selfemployed:api', ':selfemployed:impl'
+include ':vtb-id:bio-api'
+include ':vtb-id:bio-impl'
+include ':senior-generation:pension-service:impl'
+include ':senior-generation:pension-service:api'
+include ':bbo-api'
+include ':vip-clients:packet-services:api'
+include ':vip-clients:packet-services:impl'
+include ':bbo'
+include ':encryption-impl'
+include ':encryption-api'
+
+include ':vtb-id:face-confirmation-api'
+include ':vtb-id:face-confirmation-impl'
+include ':vtb-id:face-detection-api'
+include ':vtb-id:face-detection-impl'
+include ':vtb-id:fingerprint-auth'
+include ':vtb-id:event:api', ':vtb-id:event:impl'
+include ':vtb-id:new-sign-up:api', ':vtb-id:new-sign-up:impl'
+include ':vtb-id:partners-transition:api', ':vtb-id:partners-transition:impl'
+include ':vtb-id:utils'
+include ':vip-clients:personal-manager:privilege-general-data'
+
+include ':google-pay-api'
+include ':google-pay'
+//Страхование
+include ':insurance:insurance-api',
+        ':insurance:insurance-impl',
+        ':insurance:insurance-payment-api',
+        ':insurance:insurance-payment-impl',
+        ':insurance:insurance-claims-api',
+        ':insurance:insurance-claims-impl',
+        ':insurance:common',
+        ':insurance:insauto:osago:api',
+        ':insurance:insauto:osago:impl',
+        ':insurance:dadata:api',
+        ':insurance:dadata:impl',
+        ':insurance:loan-post-market:impl',
+        ':insurance:loan-post-market:api',
+        ':insurance:loan-post-market:data',
+        ':insurance:mainpage',
+        ':insurance:insurance-casco:api',
+        ':insurance:insurance-casco:impl'
+
+include ':personal-and-family-services:history-operations:filters',
+        ':personal-and-family-services:history-operations:rangedatepicker',
+        ':personal-and-family-services:history-operations:rangedatepicker-api',
+        ':personal-and-family-services:history-operations:history-operations-api',
+        ':personal-and-family-services:history-operations:history-operations-impl',
+        ':personal-and-family-services:history-operations:common'
+include ':personal-and-family-services:pfm:pfm-api',
+        ':personal-and-family-services:pfm:pfm-impl',
+        ':personal-and-family-services:pfm:fin-sum-api',
+        ':personal-and-family-services:pfm:fin-sum-impl'
+include ':operation-common'
+
+//region Цифровые продажи
+        // Каталог
+include ':digital-sales:catalog:api', ':digital-sales:catalog:impl',
+        ':digital-sales:common:common-requests'
+        // Баннеры
+include ':digital-sales:dam-engine:api',
+        ':digital-sales:dam-engine:impl',
+        ':digital-sales:dam-engine:ui',
+        ':digital-sales:dam-engine:ui-components',
+        ':digital-sales:dam-engine:model',
+        ':digital-sales:dam-engine:mapper:api',
+        ':digital-sales:dam-engine:mapper:impl',
+        ':digital-sales:dam-engine:extensions'
+        // Сервисы
+include ':digital-sales:showcase:api',
+        ':digital-sales:showcase:impl',
+        ':digital-sales:showcaseold:showcase-dam:api',
+        ':digital-sales:showcaseold:showcase-dam:entities',
+        ':digital-sales:showcaseold:showcase-dam:impl',
+        ':digital-sales:showcaseold:showcase:impl',
+        ':digital-sales:showcaseold:showcase:api'
+        // Старый слайдер
+include ':digital-sales:slider-info-banner'
+        // Лайт
+include ':digital-sales:lite:impl',
+        ':digital-sales:lite:api'
+        // Подсказки
+include ':digital-sales:guide'
+        // Семейный банк
+include ':digital-sales:family-bank:api',
+        ':digital-sales:family-bank:impl'
+        // УЛ
+include ':digital-sales:widget-whats-new:impl',
+        ':digital-sales:widget-whats-new:api',
+        ':digital-sales:widget-whats-new:mainpage'
+//endregion
+
+//region Стрим Дебетовые карты и счета
+include ':debit-card:details:api', ':debit-card:details:impl',
+        ':debit-card:details-lite:api', ':debit-card:details-lite:impl',
+        ':debit-card:accounts-close:api', ':debit-card:accounts-close:impl',
+        ':debit-card:additional-holder:api', ':debit-card:additional-holder:impl',
+        ':debit-card:additional-sign:api', ':debit-card:additional-sign:impl',
+        ':debit-card:partner-offers:api', ':debit-card:partner-offers:impl',
+        ':debit-card:arrest:api', ':debit-card:arrest:impl',
+        ':debit-card:block-lite:api', ':debit-card:block-lite:impl',
+        ':debit-card:change-pin:api', ':debit-card:change-pin:impl',
+        ':debit-card:change-pin-lite:api', ':debit-card:change-pin-lite:impl',
+        ':debit-card:common',
+        ':debit-card:details-network:api', ':debit-card:details-network:impl',
+        ':debit-card:emission-children-card:api', ':debit-card:emission-children-card:impl',
+        ':debit-card:emission-digital-card:api', ':debit-card:emission-digital-card:impl',
+        ':debit-card:emission-sticker:api', ':debit-card:emission-sticker:impl',
+        ':debit-card:emission-thirdfaces-sticker:api', ':debit-card:emission-thirdfaces-sticker:impl',
+        ':debit-card:emission-children-sticker:api', ':debit-card:emission-children-sticker:impl',
+        ':debit-card:emission-thirdfaces-card:api', ':debit-card:emission-thirdfaces-card:impl',
+        ':debit-card:emission-thirdfaces-digital-card:api', ':debit-card:emission-thirdfaces-digital-card:impl',
+        ':debit-card:emission-plastic-card:api', ':debit-card:emission-plastic-card:impl', ':debit-card:common-card-emission',
+        ':debit-card:card-emission-showcase:api', ':debit-card:card-emission-showcase:impl',
+        ':debit-card:change-card-account:api', ':debit-card:change-card-account:impl',
+        ':debit-card:simple-pdf-viewer:api', ':debit-card:simple-pdf-viewer:impl',
+        ':debit-card:location:api', ':debit-card:location:impl',
+        ':debit-card:content-tooltips-emission:api', ':debit-card:content-tooltips-emission:impl',
+        ':debit-card:limits:api', ':debit-card:limits:impl',
+        ':debit-card:limits-lite:api', ':debit-card:limits-lite:impl',
+        ':debit-card:card-limits:api', ':debit-card:card-limits:impl',
+        ':debit-card:mir-pay:api', ':debit-card:mir-pay:impl',
+        ':debit-card:mir-pay-sdk:api', ':debit-card:mir-pay-sdk:impl',
+        ':debit-card:multibonus-lite:api', ':debit-card:multibonus-lite:impl',
+        ':debit-card:open-account:api', ':debit-card:open-account:impl',
+        ':debit-card:office-map:api', ':debit-card:office-map:impl',
+        ':debit-card:questionnaire-lite:api', ':debit-card:questionnaire-lite:impl',
+        ':debit-card:reissue:api', ':debit-card:reissue:impl',
+        ':debit-card:requisites-cvv:api', ':debit-card:requisites-cvv:impl',
+        ':debit-card:requisites-account:api', ':debit-card:requisites-account:impl',
+        ':debit-card:requisites-cvv-lite:api', ':debit-card:requisites-cvv-lite:impl',
+        ':debit-card:samsung-pay:api', ':debit-card:samsung-pay:impl',
+        ':debit-card:samsung-pay-sdk:api', ':debit-card:samsung-pay-sdk:impl',
+        ':debit-card:sms-confirmation:api', ':debit-card:sms-confirmation:impl',
+        ':debit-card:tariff:api', ':debit-card:tariff:impl',
+        ':debit-card:card-reissue:api', ':debit-card:card-reissue:impl',
+        ':debit-card:tokenization:api', ':debit-card:tokenization:impl',
+        ':debit-card:unblock-lite:api', ':debit-card:unblock-lite:impl',
+        ':debit-card:card-onboarding:api', ':debit-card:card-onboarding:impl', ':debit-card:card-onboarding:ui',
+        ':debit-card:client-onboarding:api', ':debit-card:client-onboarding:impl',
+        ':debit-card:tokenization-lite:api', ':debit-card:tokenization-lite:impl',
+        ':debit-card:reissue-lite:api', ':debit-card:reissue-lite:impl',
+        ':debit-card:emission-anketa:api', ':debit-card:emission-anketa:impl',
+        ':debit-card:emission-card:api', ':debit-card:emission-card:impl',
+        ':debit-card:vtb-pay-nfc:api', ':debit-card:vtb-pay-nfc:impl',
+        ':debit-card:emission-delivery:impl', ':debit-card:emission-delivery:api',
+        ':debit-card:vtb-pay-online:api', ':debit-card:vtb-pay-online:impl',
+        ':debit-card:notification-settings:api', ':debit-card:notification-settings:impl'
+//endregion
+
+//region Сберегательные продукты
+include ':savings:showcase:impl', ':savings:showcase:api',
+        ':savings:deposit-impl', ':savings:deposit-api',
+        ':savings:account-common',
+        ':savings:goal-api', ':savings:goal-impl',
+        ':savings:account-api', ':savings:account-impl',
+        ':savings:autorecharge-api', ':savings:autorecharge-impl',
+        ':savings:gamification-api', ':savings:gamification-impl',
+        ':savings:tax-informer:api', ':savings:tax-informer:impl',
+        ':savings:open-deposit:api', ':savings:open-deposit:impl',
+        ':savings:long-term-savings:api', ':savings:long-term-savings:impl',
+        ':savings:details:api', ':savings:details:impl'
+//endregion
+
+include ':vip-clients:personal-manager:privilege-api'
+
+include ':personal-and-family-services:cross-search:cross-search-api',
+        ':personal-and-family-services:cross-search:cross-search',
+        ':personal-and-family-services:cross-search:cross-search-common'
+include ':vip-clients:personal-manager:privilege'
+
+//Переводы
+include ':transfers:addressbook:api', ':transfers:addressbook:impl', ':transfers:addressbook:ui',
+        ':transfers:transfers:api', ':transfers:transfers:impl',
+        ':transfers:transfers-by-account:impl', ':transfers:transfers-by-account:api',
+        ':transfers:currency:api', ':transfers:currency:impl', ':transfers:currency:mainpage',
+        ':transfers:whip-round:api', ':transfers:whip-round:impl', ':transfers:whip-round:common',
+        ':transfers:tranworld-c2c:api', ':transfers:tranworld-c2c:impl',
+        ':transfers:transfers-settings:api', ':transfers:transfers-settings:impl',
+        ':transfers:sumcalculator',
+        ':transfers:tranworld-swift:api', ':transfers:tranworld-swift:impl',
+        ':transfers:qr-replenish:api', ':transfers:qr-replenish:impl',
+        ':transfers:transfers-addressbook:impl', ':transfers:transfers-addressbook:api',
+        ':transfers:transfers-search:impl', ':transfers:transfers-search:api',
+        ':transfers:tranworld:api', ':transfers:tranworld:impl',
+        ':transfers:tranworld-services:api', ':transfers:tranworld-services:impl',
+        ':transfers:transfers-ui',
+        ':transfers:transfers-c2c:api', ':transfers:transfers-c2c:impl', ':transfers:transfers:common',
+        ':transfers:replenish-menu:api', ':transfers:replenish-menu:impl',
+        ':transfers:transfers-pdf',
+        ':transfers:templates:api', ':transfers:templates:impl',
+        ':transfers:autotransfers:api', ':transfers:autotransfers:impl',
+        ':transfers:me2me-pull:api', ':transfers:me2me-pull:impl',
+        ':transfers:tranworld-cash:api', ':transfers:tranworld-cash:impl',
+        ':transfers:tranworld-pay-qr:api', ':transfers:tranworld-pay-qr:impl',
+        ':transfers:transfers-fps:api', ':transfers:transfers-fps:impl'
+
+include ':geofencing:geofencing-api'
+include ':geofencing:geofencing-impl'
+include ':geofencing:geofencing-impl-gms'
+include ':extendsandroidcomponents'
+include ':emv-reader'
+include ':emv-reader-api'
+
+include ':appeal-impl'
+include ':appeal-api'
+
+include ':app',
+        ':uikitsandbox'
+
+//region Стрим Розничный Клиент
+include ':retail-client:digital-profile-api', ':retail-client:digital-profile-impl',
+        ':retail-client:agreements:api', ':retail-client:agreements:impl',
+        ':retail-client:user-settings-api', ':retail-client:user-settings-impl'
+//endregion
+
+include ':investments:closecontract:api', ':investments:closecontract:impl'
+include ':investments:opencontract:api', ':investments:opencontract:impl'
+include ':investments:openforex:api', ':investments:openforex:impl'
+include ':investments:portfoliomc:detail:api', ':investments:portfoliomc:detail:impl'
+include ':investments:purchaseopif:api', ':investments:purchaseopif:impl'
+include ':investments:exchangeopif:api', ':investments:exchangeopif:impl'
+include ':investments:promotion:api', ':investments:promotion:impl'
+include ':investments:purchasesecurities:api', ':investments:purchasesecurities:impl'
+include ':investments:repayunits:api', ':investments:repayunits:impl'
+include ':investments:taxdeduction:api', ':investments:taxdeduction:impl'
+include ':investments:taxdeduction-landing:api', ':investments:taxdeduction-landing:impl'
+include ':investments:microinvestments:api', ':investments:microinvestments:impl'
+include ':investments:reference:api', ':investments:reference:impl'
+include ':investments:landing:api', ':investments:landing:impl'
+include ':investments:instrument-detail-launcher:api', ':investments:instrument-detail-launcher:impl'
+include ':investments:instrument-detail:api', ':investments:instrument-detail:impl'
+include ':investments:testing:api', ':investments:testing:impl'
+include ':investments:deeplinks:api', ':investments:deeplinks:impl'
+include ':investments:investconsulting:api', ':investments:investconsulting:impl'
+include ':investments:gold-autumn:api', ':investments:gold-autumn:impl'
+include ':investments:trust-management:api', ':investments:trust-management:impl'
+include ':investments:common'
+include ':investments:common-operations'
+include ':investments:common-instrument'
+include ':investments:common-data:api', ':investments:common-data:impl'
+include ':investments:qualified-investor:api', ':investments:qualified-investor:impl'
+include ':investments:main-page-section'
+include ':vip-clients:vip-privilege:api', ':vip-clients:vip-privilege:impl'
+include ':personal-and-family-services:limits:limits-api'
+include ':personal-and-family-services:limits:limits-impl'
+
+//стрим Госуслуги
+include ':gosuslugi:maternal-capital:impl', ':gosuslugi:maternal-capital:api'
+include ':gosuslugi:social-payments:api', ':gosuslugi:social-payments:impl'
+include ':gosuslugi:social-calculator:api', ':gosuslugi:social-calculator:impl'
+include ':gosuslugi:social-benefits:api', ':gosuslugi:social-benefits:impl'
+include ':gosuslugi:esia:api', ':gosuslugi:esia:impl'
+include ':gosuslugi:pspf-pension:impl', ':gosuslugi:pspf-pension:api'
+include ':gosuslugi:gosuslugi:api', ':gosuslugi:gosuslugi:impl'
+include ':gosuslugi:gosuslugi-signup:api', ':gosuslugi:gosuslugi-signup:impl'
+include ':gosuslugi:gosuslugi-tax-deduction:api', ':gosuslugi:gosuslugi-tax-deduction:impl'
+include ':gosuslugi:common'
+
+include ':chats:chat-api'
+include ':chats:chat-impl'
+
+// Стрим "кредит наличными"
+include ':cash-loan:shared:common', ':cash-loan:shared:comon-test',   //КН Общая библитотека
+//КН Умная анкета
+        ':cash-loan:smartprofile:api', ':cash-loan:smartprofile:impl',
+        //Постпродажка КН
+        ':cash-loan:postmarket:api', ':cash-loan:postmarket:impl'
+include ':savings:oms-api', ':savings:oms-impl'
+include ':savings:iszh-api', ':savings:iszh-impl'
+
+// Общепродуктовые сервисы РБ
+include ':product-services:statements:api',
+        ':product-services:statements:impl'
+
+//Платежи
+include ':payments:invoices:api', ':payments:invoices:impl',
+        ':payments:autopayments:api', ':payments:autopayments:impl',
+        ':payments:auto-payments-wizard:api', ':payments:auto-payments-wizard:impl',
+        ':payments:templates:api', ':payments:templates:impl',
+        ':payments:feed:api', ':payments:feed:impl',
+        ':payments:balance-autopayment:api', ':payments:balance-autopayment:impl',
+        ':payments:billspayment:api', ':payments:billspayment:impl',
+        ':payments:common',
+        ':payments:catalog:api', ':payments:catalog:impl',
+        ':payments:change-region:api', ':payments:change-region:impl',
+        ':payments:subscriptions-autopayments-entry:api', ':payments:subscriptions-autopayments-entry:impl',
+        ':payments:barcode-scanner-handler:api', ':payments:barcode-scanner-handler:impl',
+        ':payments:government:api', ':payments:government:impl',
+        ':payments:taxes:api', ':payments:taxes:impl',
+        ':payments:taxes-packets:api', ':payments:taxes-packets:impl',
+        ':payments:cpayqr:qqr_government:api', ':payments:cpayqr:common', ':payments:cpayqr:qqr_government:impl', ':payments:cpayqr:qqr_government:common',
+        ':payments:pmnt-sp-search-by-barcode:api', ':payments:pmnt-sp-search-by-barcode:impl',
+        ':payments:barcode-scanner:api', ':payments:barcode-scanner:impl', ':payments:barcode-scanner:common',
+        ':payments:mobile-payments:api', ':payments:mobile-payments:impl',
+        ':payments:pmnt-acceptance-common',
+        ':payments:pmnt-acceptance-universal:api', ':payments:pmnt-acceptance-universal:impl', ':payments:pmnt-acceptance-universal:common',
+        ':payments:pmnt-acceptance-requisites:api', ':payments:pmnt-acceptance-requisites:impl',
+        ':payments:pmnt-acceptance-eirc-moscow:api', ':payments:pmnt-acceptance-eirc-moscow:impl',
+        ':payments:pmnt-acceptance-mosenergo:api', ':payments:pmnt-acceptance-mosenergo:impl',
+        ':payments:pmnt-acceptance-gl:api', ':payments:pmnt-acceptance-gl:impl',
+        ':payments:avtodor:api', ':payments:avtodor:impl',
+        ':payments:trio-card:api', ':payments:trio-card:impl',
+        ':payments:parking-lots:api', ':payments:parking-lots:impl',
+        ':payments:search',
+        ':payments:sms-confirmation',
+        ':payments:operations-list:api', ':payments:operations-list:impl',
+        ':payments:penalties:api', ':payments:penalties:impl',
+        ':payments:recommends:api', ':payments:recommends:impl',
+        ':payments:pmnt-c2b-subscriptions:api', ':payments:pmnt-c2b-subscriptions:impl',
+        ':payments:pmnt-acceptance-fssp:api', ':payments:pmnt-acceptance-fssp:impl',
+        ':payments:qr-handlers:api', ':payments:qr-handlers:impl',
+        ':payments:vtb-mobilelk:api', ':payments:vtb-mobilelk:impl',
+        ':payments:vtb-mobile-widget',
+        ':payments:photopayment:api', ':payments:photopayment:impl',
+        ':payments:cpayqr:payment-by-barcode:common',
+        ':payments:onboardings:api', ':payments:onboardings:impl',
+        ':payments:cv-converter:api', ':payments:cv-converter:impl',
+        ':payments:gosuslugi:api', ':payments:gosuslugi:impl',
+        ':payments:lifestyle-fuel:api', ':payments:lifestyle-fuel:impl'
+
+include ':widget-pushinbox-api', ':widget-pushinbox'
+
+include ':msuo-api'
+include ':msuo-impl'
+
+//region Модули входа(входы/регистрации/прочая магия происходящая до главного экрана)
+include ':vtb-id:sign-up-api', ':vtb-id:sign-up-impl'
+//endregion
+
+//Голосовой ассистент
+include ':voiceassistant:api'
+include ':voiceassistant:impl'
+include ':voiceassistant:presentation:api'
+include ':voiceassistant:presentation:impl'
+include ':voiceassistant:virtual-department:common:api'
+include ':voiceassistant:virtual-department:common:impl'
+include ':voiceassistant:virtual-department:network:api'
+include ':voiceassistant:virtual-department:network:impl'
+include ':calling-api', ':calling'
+
+include ':vip-clients:vip-prime-asp:api',
+        ':vip-clients:vip-prime-asp:impl',
+        ':vip-clients:prime-subscription:api', ':vip-clients:prime-subscription:impl'
+
+include ':retail-client:consents-management:api', ':retail-client:consents-management:impl'
+
+//region Омниканальный мидл
+include ':omni-middle:confirmation:impl', ':omni-middle:confirmation:api'
+include ':omni-middle:dynamic-confirmation:api', ':omni-middle:dynamic-confirmation:impl'
+include ':omni-middle:dynamic-confirmation-demo:api', ':omni-middle:dynamic-confirmation-demo:impl'
+include ':omni-middle:emv-core:api', ':omni-middle:emv-core:impl'
+include ':omni-middle:imsi-change:api', ':omni-middle:imsi-change:impl'
+include ':omni-middle:common'
+include ':omni-middle:cross-search:api', ':omni-middle:cross-search:impl'
+include ':omni-middle:biometry:api', ':omni-middle:biometry:impl'
+include ':omni-middle:open-banking:api', ':omni-middle:open-banking:impl', ':omni-middle:open-banking:mainpage'
+include ':omni-middle:self-restraint:api', ':omni-middle:self-restraint:impl'
+include ':omni-middle:digital-environment:transport:api', ':omni-middle:digital-environment:transport:impl'
+include ':omni-middle:digital-environment:campus:api', ':omni-middle:digital-environment:campus:impl'
+include ':omni-middle:digital-environment:volna:api', ':omni-middle:digital-environment:volna:impl'
+// Цифровой рубль
+include ':omni-middle:digital-rouble:api', ':omni-middle:digital-rouble:impl', ':omni-middle:digital-rouble:mainpage', ':omni-middle:digital-rouble:crypto', ':omni-middle:digital-rouble:crypto-environment:impl', ':omni-middle:digital-rouble:common-utils'
+
+//endregion Омниканальный мидл
+
+include ':gosuslugi:extracts-from-departments:api', ':gosuslugi:extracts-from-departments:impl'
+
+include ':core:core-feature-toggle:integration'
+include ':gosuslugi:arrest-and-penalties:api', ':gosuslugi:arrest-and-penalties:impl'
+include ':gosuslugi:geps-notifications:api', ':gosuslugi:geps-notifications:impl'
+
+// Кешбэк
+include ':individual-loyalty:cashback-ruble:api',
+        ':individual-loyalty:cashback-ruble:impl'
+
+// Пакет: подписка
+include ':service-packages-and-subscription:subscription:api',
+        ':service-packages-and-subscription:subscription:impl'
+
+// Подписка "ВТБ плюс"
+include ':service-packages-and-subscription:vtb-plus:api',
+        ':service-packages-and-subscription:vtb-plus:impl'
+
+// Семейный банк - Близкие
+include ':service-packages-and-subscription:family-group:api',
+        ':service-packages-and-subscription:family-group:impl',
+        ':service-packages-and-subscription:family-group-onboarding:api',
+        ':service-packages-and-subscription:family-group-onboarding:impl'
+
+//region Автокредитование
+include ':auto-loans:common',
+        ':auto-loans:showcase:api', ':auto-loans:showcase:impl',
+        ':auto-loans:market:api', ':auto-loans:market:impl',
+        ':auto-loans:car-subscription:api', ':auto-loans:car-subscription:impl',
+        ':auto-loans:carloan-service:api', ':auto-loans:carloan-service:impl',
+        ':auto-loans:deal:api', ':auto-loans:deal:impl',
+        ':auto-loans:carloan-onboarding:api', ':auto-loans:carloan-onboarding:impl',
+        ':auto-loans:carloan-form:api', ':auto-loans:carloan-form:impl',
+        ':auto-loans:garage:api', ':auto-loans:garage:impl',
+        ':auto-loans:digital-car-purchase-deal:api', ':auto-loans:digital-car-purchase-deal:impl',
+        ':auto-loans:concierge-onboarding:api', ':auto-loans:concierge-onboarding:impl',
+        ':auto-loans:deeplink:api', ':auto-loans:deeplink:impl'
+//endregion Автокредитование
+
+// Устройства самообслуживания
+include ':self-service-devices:widgets:mainpage',
+        ':self-service-devices:cartomat:api',
+        ':self-service-devices:cartomat:impl',
+        ':self-service-devices:common',
+        ':self-service-devices:atm-branch-map:impl',
+        ':self-service-devices:atm-branch-map:api',
+        ':self-service-devices:qr-cash:api',
+        ':self-service-devices:qr-cash:impl'
+
+// Фича: DSA (Direct Sales Agent)
+include ':direct-sales-agent:dsa:api', ':direct-sales-agent:dsa:impl'
+
+include ':operation-impl'
+
+//VTB Lite
+include ':vtb-lite:lite-card-close-api',
+        ':vtb-lite:lite-card-close-impl'
+
+//region Mobile-banking
+
+//region Platform
+include ':mobile-banking:platform:main-entry-core-api',
+        ':mobile-banking:platform:mainpage-entry',
+        // Специальные возможности
+        ':mobile-banking:platform:special-service:impl',
+        ':mobile-banking:platform:special-service:api',
+        // Виджет избранных операций
+        ':mobile-banking:platform:widget-favorite-operations:impl',
+        ':mobile-banking:platform:widget-favorite-operations:api',
+        // Виджет "Основные виджеты"
+        ':mobile-banking:platform:widget-platform:impl',
+        ':mobile-banking:platform:widget-platform:api',
+        // Магазин виджетов
+        ':mobile-banking:platform:widget-shop:impl',
+        ':mobile-banking:platform:widget-shop:api',
+        // Обновление WebView
+        ':mobile-banking:platform:webview-update:impl',
+        ':mobile-banking:platform:webview-update:api',
+        // Основной модуль для создания виджетов
+        ':mobile-banking:platform:widgets-framework:widgets-core',
+        // Инициализация регистра виджетов временно
+        ':mobile-banking:platform:widgets-framework:widgets-registry',
+        ':mobile-banking:platform:app-update:widget:api', ':mobile-banking:platform:app-update:widget:impl',
+        // Логирование проекта
+        ':mobile-banking:platform:log-collector:api', ':mobile-banking:platform:log-collector:impl',
+        ':mobile-banking:platform:log-viewer:api', ':mobile-banking:platform:log-viewer:impl',
+//endregion
+
+        //Airbar виджет
+        ':mobile-banking:airbar-component',
+        ':mobile-banking:airbar-settings:api',
+        ':mobile-banking:airbar-settings:impl',
+        //Выпуск карты
+        ':mobile-banking:card-emission',
+        //Диплинки
+        ':mobile-banking:deeplink:api',
+        ':mobile-banking:deeplink:impl',
+        //Экран детальной информации
+        ':mobile-banking:detail-page-framework',
+        ':mobile-banking:detail-page-registry',
+        //Экран детальной информации (устаревшие)
+        ':mobile-banking:detail-page-legacy:api',
+        ':mobile-banking:detail-page-legacy:impl',
+        //Автообновление апк
+        ':mobile-banking:platform:app-update:download-apk:impl',
+        ':mobile-banking:platform:app-update:light',
+        //Онбординг виджетов 2.0
+        ':mobile-banking:onboarding20',
+        //Защищенный профиль пользователя
+        ':mobile-banking:securityprofile:api',
+        ':mobile-banking:securityprofile:impl',
+        //Shortcut - работа со списком быстрых действий
+        ':mobile-banking:shortcut',
+        //Метрика sla
+        ':mobile-banking:sla-metrics',
+        //Библиотека rxDogTag
+        ':mobile-banking:rxdogtag',
+        //Веб вью
+        ':mobile-banking:webview:api',
+        ':mobile-banking:webview:impl',
+        ':mobile-banking:webview:common',
+        //Обработчик интентов запуска приложения
+        ':mobile-banking:launch-intent-handler:api', ':mobile-banking:launch-intent-handler:impl'
+//endregion
+
+//Кредитные карты
+include ':credit-cards:common-card',
+        // Выпуск дополнительной кредитной карты
+        ':credit-cards:release-additional:api',
+        ':credit-cards:release-additional:impl',
+        //Добавление в кошелек для кредитных карт
+        ':credit-cards:card-pay:api',
+        ':credit-cards:card-pay:impl',
+        //Выписка по кредитной карте и счету
+        ':credit-cards:credit-statement:api',
+        ':credit-cards:credit-statement:impl',
+        //Кредитные каникулы
+        ':credit-cards:credit-holidays:api',
+        ':credit-cards:credit-holidays:impl',
+        ':credit-cards:card-reissue:api',
+        ':credit-cards:card-reissue:impl',
+        ':credit-cards:cross-sales:api',
+        ':credit-cards:cross-sales:impl',
+        //Закрытие кредитной карты
+        ':credit-cards:close-card:api',
+        ':credit-cards:close-card:impl',
+        //Бонусы
+        ':credit-cards:card-bonus-options:api',
+        ':credit-cards:card-bonus-options:impl',
+        ':credit-cards:document-pdf-view',
+        ':credit-cards:bpm-omni-architecture',
+        ':credit-cards:bpm-stepper',
+        //ScoringWay
+        ':credit-cards:scoringway:api',
+        ':credit-cards:scoringway:impl',
+        ':credit-cards:scoringway:dadata',
+        //Рефинансирование
+        ':credit-cards:balancetransfer:api',
+        ':credit-cards:balancetransfer:impl',
+        ':credit-cards:balancetransfer-info:api',
+        ':credit-cards:balancetransfer-info:impl',
+        //Миграция
+        ':credit-cards:migration:api',
+        ':credit-cards:migration:impl',
+        //Изменение кредитного лимита по инициативе банка
+        ':credit-cards:card-change-limit:bank-initiator:api',
+        ':credit-cards:card-change-limit:bank-initiator:impl',
+        //Изменение кредитного лимита по инициативе клиента
+        ':credit-cards:card-change-limit:client-initiator:api',
+        ':credit-cards:card-change-limit:client-initiator:impl',
+        //Кросс-продажи кредитных карт
+        ':credit-cards:cross-issuance:api',
+        ':credit-cards:cross-issuance:impl',
+        //Подборщик кредитных продуктов
+        ':credit-cards:product-selector:api',
+        ':credit-cards:product-selector:impl',
+        //Выпуск цифроваой кредитной карты
+        ':credit-cards:virtualcard:api',
+        ':credit-cards:virtualcard:impl',
+        //Реактивная кредитная карта
+        ':credit-cards:card-getting:reactive:api',
+        ':credit-cards:card-getting:reactive:impl',
+        //Предодобренная кредитная карта (PACC)
+        ':credit-cards:card-getting:pacc:api',
+        ':credit-cards:card-getting:pacc:impl',
+        //Условно предодобренная кредитная карта (CPACC)
+        ':credit-cards:card-getting:cpacc:api',
+        ':credit-cards:card-getting:cpacc:impl',
+        //Модуль общих компонентов для выпуска кредитной карты
+        ':credit-cards:card-getting:common',
+        //Увеличение или уменьшение кредитного лимита
+        ':credit-cards:card-increase-limit:impl',
+        ':credit-cards:card-increase-limit:api',
+        //Реферальный выпуск карты
+        ':credit-cards:referral-system:impl',
+        ':credit-cards:referral-system:api',
+        //Информация по задолежнности
+        ':credit-cards:credit-info:api',
+        ':credit-cards:credit-info:impl',
+        ':credit-cards:credit-tutorial:api',
+        ':credit-cards:credit-tutorial:impl',
+        ':credit-cards:details:common-network:impl',
+        ':credit-cards:details:common-network:api',
+        ':credit-cards:common-product-network:api',
+        ':credit-cards:common-product-network:impl',
+        ':credit-cards:details:common-widget:impl',
+        ':credit-cards:details:common-widget:impl-omega',
+        ':credit-cards:details:common-widget:api',
+        ':credit-cards:details:settings:api',
+        ':credit-cards:details:settings:impl',
+        ':credit-cards:details:product-details:api',
+        ':credit-cards:details:product-details:impl',
+        // Роутер выбора типа детальной информации по КК
+        ':credit-cards:details:product-details:router',
+        // Детальная информация по КК основанная на ДС Omega
+        ':credit-cards:details:product-details:impl-omega',
+        //Динамические рубашки
+        ':credit-cards:card-covers:api',
+        ':credit-cards:card-covers:impl',
+        //Блокировка карты
+        ':credit-cards:card-lock:api',
+        ':credit-cards:card-lock:impl',
+        //Реквизиты
+        ':credit-cards:requisites:api',
+        ':credit-cards:requisites:impl',
+        ':credit-cards:requisites:component',
+        //Выбор офиса для доставки
+        ':credit-cards:bank-office-selection:api',
+        ':credit-cards:bank-office-selection:impl',
+        //Переименования продукта
+        ':credit-cards:rename-product:api',
+        ':credit-cards:rename-product:impl',
+        //Беспроцентный период
+        ':credit-cards:unlimited-period:api',
+        ':credit-cards:unlimited-period:impl',
+        //Грейс за кеш
+        ':credit-cards:grace-for-cash:api',
+        ':credit-cards:grace-for-cash:impl',
+        //Годовой бонус за использование кредитной карты
+        ':credit-cards:year-bonus:api',
+        ':credit-cards:year-bonus:impl',
+        //Опросники удавлетворенности клиента сервисом Кредитных карт
+        ':credit-cards:survey:api',
+        ':credit-cards:survey:impl',
+        ':credit-cards:survey:component',
+         //Модуль отладки Кредитных карт
+        ':credit-cards:debug-menu:api',
+        ':credit-cards:debug-menu:impl',
+        //Информация о карте
+        ':credit-cards:card-info:api',
+        ':credit-cards:card-info:impl',
+        //Рассрочка
+        ':credit-cards:installments:api',
+        ':credit-cards:installments:impl',
+        //Выпуск доп. карты WAY
+        ':credit-cards:release-additional-way:api',
+        ':credit-cards:release-additional-way:impl',
+        //Выпуск доп. карты PROFILE
+        ':credit-cards:release-additional-profile:api',
+        ':credit-cards:release-additional-profile:impl',
+        //Работа со страховками у кредиток
+        ':credit-cards:credit-insurance:api',
+        ':credit-cards:credit-insurance:impl',
+        //Модуль утилит
+        ':credit-cards:utils',
+        //Модуль блокировки кредитных карт
+        ':credit-cards:common-block:api',
+        ':credit-cards:common-block:impl',
+        // Доставка кредитных карт
+        ':credit-cards:card-delivery:api',
+        ':credit-cards:card-delivery:impl',
+        //Именование кредитной краты
+        ':credit-cards:card-sign:api',
+        ':credit-cards:card-sign:impl',
+        //Активация кредитной краты
+        ':credit-cards:card-activation:api',
+        ':credit-cards:card-activation:impl',
+        ':credit-cards:models-legacy:lib',
+        ':credit-cards:models-legacy:mapper',
+        // История изменения кредитного лимита по КК
+        ':credit-cards:card-change-limit:history:api',
+        ':credit-cards:card-change-limit:history:impl'
+
+//Зарплатные сервисы
+//Личный кабинет зарплатного клиента
+include ':salary-service:salary-main-page:api',
+        ':salary-service:salary-main-page:impl',
+        //Расчетные листы
+        ':salary-service:salary-payslip:api',
+        ':salary-service:salary-payslip:impl',
+        //Выпуск зарплатных карт
+        ':salary-service:salary-card-distribution:api',
+        ':salary-service:salary-card-distribution:impl',
+        //ЕСИА
+        ':salary-service:offer-become-payroll-client:api',
+        ':salary-service:offer-become-payroll-client:impl',
+        //Перевод зарплаты в ВТБ
+        ':salary-service:transfer-salary:impl',
+        ':salary-service:transfer-salary:api',
+        //Сообщения от работодателя
+        ':salary-service:salary-message:api',
+        ':salary-service:salary-message:impl',
+        //Реферальная программа для зарплатных клиентов
+        ':salary-service:salary-referral-program:api',
+        ':salary-service:salary-referral-program:impl'
+
+//Стрим Технологии продаж и продвижения
+//Реферальная программа
+include ':sales-and-promotion-technologies:referral-program:api',
+        ':sales-and-promotion-technologies:referral-program:impl',
+        //Акционная платформа
+        ':sales-and-promotion-technologies:promo-platform:api',
+        ':sales-and-promotion-technologies:promo-platform:impl'
+
+//Заказ наличных
+include ':cash-order:api'
+include ':cash-order:impl'
+
+// Детальная страница БС/ИИС
+include ':investments:account-details:api'
+include ':investments:account-details:impl'
+
+// Ипотека
+include ':mortgage:escrow:api',
+        ':mortgage:escrow:impl',
+        ':mortgage:mortgage-rkk:api',
+        ':mortgage:mortgage-rkk:impl'
+
+//Авторизация через госбиометрию
+include ':gosbio-auth:api'
+include ':gosbio-auth:impl'
+
+// Продажа вне отделений
+include ':sales-outside-office:delivery-cards:api', ':sales-outside-office:delivery-cards:impl'
+
+//Пополнение БС/ИИС
+include ':investments:account-replenishment:api', ':investments:account-replenishment:impl'
+
+include ':mobile-banking:platform:app-update:download-apk:api'
+
+//Онлайн отображение прогресса выполнения условий для бесплатного обслуживания (Привилегия)
+include ':vip-clients:privilege-progress:api'
+include ':vip-clients:privilege-progress:impl'
+
+//Нотификации (пушинбокс, настройки уведомлений, push)
+include ':notifications:api', ':notifications:impl'
+
+//Меню переводов
+include ':transfers:transfers-entry-menu'
+
+// Настройки корсеттингов для упрощения отладки
+include ':mobile-banking:platform:debug-features:core-settings:api', ':mobile-banking:platform:debug-features:core-settings:impl'
+
+include ':payments:livebalances:api', ':payments:livebalances:impl'
+
+include ':payments:main-page:api', ':payments:main-page:impl'
+include ':mobile-banking:platform:dependency-finder'
+include ':digital-sales:showcaseold:showcase:mainpage'
+include ':mobile-banking:platform:quick-actions:api'
+include ':mobile-banking:platform:quick-actions:impl'
+include ':mobile-banking:platform:navbar:api'
+include ':mobile-banking:platform:navbar:impl'
+include ':mobile-banking:platform:main-page-onboardings:api'
+include ':mobile-banking:platform:main-page-onboardings:impl'
+include ':mobile-banking:platform:main-activity:impl'
+include ':mobile-banking:platform:archive:api'
+include ':mobile-banking:platform:archive:impl'
+
+// Опрос удовлетворенности пользователей
+include ':customer-experience:csi:api'
+include ':customer-experience:csi:impl'
+include ':digital-sales:dam-engine:ui-components'
+
+// Сервисы СБП
+include ':payments:sbp-services:api'
+include ':payments:sbp-services:impl'
+
+include ':core:core-secure:kasper:api'
+include ':core:core-secure:kasper:impl'
+
+include ':core:core-secure:gibf6:api'
+include ':core:core-secure:gibf6:impl'
+
+include ':children-bank:mainpage:impl'
+include ':children-bank:mainpage:api'
+
+// Информация о пользователе
+include ':mobile-banking:user-info:api'
+include ':mobile-banking:user-info:impl'
+
+// Блок "Оплатить" на главном экране платежей
+include ':payments:payment-categories:api'
+include ':payments:payment-categories:impl'
+
+// Кредитный рейтинг
+include ':credit-rating:api'
+include ':credit-rating:impl'
