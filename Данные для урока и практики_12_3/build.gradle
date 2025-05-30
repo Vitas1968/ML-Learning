@@ -1,0 +1,244 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '2.1.21'
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://maven.repo-ci.sfera.inno.local/repository/mbrb_acor-maven"
+            credentials {
+                username System.getProperty('gradle.wrapperUser')
+                password System.getProperty('gradle.wrapperPassword')
+            }
+        }
+    }
+
+    dependencies {
+        classpath 'com.android.tools:r8:8.6.27'
+        classpath 'com.google.gms:google-services:4.3.14'
+        classpath 'com.android.tools.build:gradle:8.6.1'
+        classpath 'com.google.android.gms:strict-version-matcher-plugin:1.2.2'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.huawei.agconnect:agcp:1.9.1.300'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.3.0.3225"
+        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.16.0"
+        classpath 'io.appmetrica.analytics:gradle:1.1.0'
+
+        // instrumented tests plugins
+        classpath "com.malinskiy.marathon:marathon-gradle-plugin:0.6.3"
+        classpath "io.github.sergkhram:ares-plugin:1.2.8-RELEASE"
+        classpath "com.google.guava:guava:30.1.1-jre"
+    }
+}
+plugins {
+    id("org.jetbrains.kotlin.plugin.compose") version "$kotlin_version"
+    id("com.google.devtools.ksp") version "$kotlin_version-2.0.1" apply false
+}
+def getBuildNumber = { -> return project.hasProperty('buildNumber') ? buildNumber : '0' }
+
+ext {
+    appVersionName = '19.9.0'
+    appBuildNumber = getBuildNumber()
+    appVersionCode = 2090141270
+    aaProtocolVersion = "17.0.0"
+
+    setup = [
+            compileSdk: 35,
+            minSdk    : 24,
+            targetSdk : 34
+    ]
+
+    versions = [
+            annotation          : "1.8.1",
+            appcompat           : "1.6.1",
+            dynatrace           : "8.269.1.1009",
+            constraintLayout    : "2.1.4",
+            swiperefreshlayout  : '1.1.0',
+            coordinatorlayout   : '1.2.0',
+            recyclerview        : '1.3.2',
+            shimmerlayout       : '2.1.0',
+            broadcast           : '1.0.0',
+            glide               : "4.16.0",
+            apng                : "2.16.0",
+            dagger              : "2.55",
+            room                : "2.7.1",
+            javax               : "1",
+            work                : "2.9.0",
+            flexbox             : "2.0.1",
+            chat                : [
+                    paging : '2.1.2',
+                    joda   : '2.10.3'
+            ],
+            webkit              : "1.11.0",
+            firebase            : [
+                    core     : "20.0.2",
+                    messaging: "23.1.2",
+            ],
+            test                : [
+                    androidx       : [
+                            core    : "1.5.0",
+                            runner  : "1.5.2",
+                            rules   : "1.5.0",
+                            junit   : "1.1.5",
+                            espresso: "3.5.1"
+                    ],
+                    junit          : "4.13.2",
+                    mockk          : "1.13.16",
+                    mock_server    : "5.10.0",
+                    archCoreTesting: "2.2.0",
+                    kaspresso      : "1.4.0",
+                    allureKotlin   : "2.2.7",
+                    json           : "20180813",
+                    hamcrest   : "3.0",
+            ],
+            net                 : [
+                    okhttp : "4.10.0",
+                    jackson: "2.11.0",
+                    gson   : "2.11.0",
+            ],
+            timber              : '4.7.1',
+            rxjava              : [
+                    core   : "2.2.19",
+                    android: "2.1.1"
+            ],
+            lint                : '31.6.1', // lintVersion = gradlePluginVersion + 23.0.0
+            core_ktx            : '1.13.1',
+            work_ktx            : '2.9.0',
+            jetbrainsAnnotations: '18.0.0',
+            fragment            : '1.7.1',
+            lifecycle           : '2.8.4',
+            compose: [
+                    activity          : '1.9.3',
+                    compose           : '1.7.5',
+                    constraintLayout  : '1.0.1',
+                    glide             : '1.0.0-beta01',
+                    compilerExtension : '1.5.15',
+                    coil              : '3.1.0',
+                    coil_gif          : '3.1.0',
+                    jetpack_navigation: '2.8.9'
+            ],
+            coroutines          : [
+                    core: '1.10.2'
+            ],
+            material            : '1.12.0',
+            material3           : '1.3.1',
+            biometric           : "1.1.0",
+            dynamicanimation    : "1.0.0",
+            cardview            : '1.0.0',
+            htmltextview        : '3.9',
+            percentLayout       : '1.0.0',
+            gridLayout          : '1.0.0',
+            emoji               : '1.1.0',
+            androidbrowserhelper: '2.5.0',
+            legacy_support_v4   : '1.0.0',
+            // [!] Не поднимайте версию приложения, если поддерживаем API < 24
+            // https://github.com/zxing/zxing/pull/1180
+            zxing               : '3.3.2',
+            zxingEmbedded       : '3.6.0',
+            lottie              : '6.6.4',
+            voiceAssistant      : [
+                    tensorflowlite  : '2.14.0',
+                    protoBufCompiler: '3.25.1',
+                    grpc            : '1.62.2',
+            ],
+            hms                 : [
+                    maps        : '6.9.0.300',
+                    location    : '6.9.0.300',
+                    identity    : '6.9.0.300',
+                    hwid        : '6.7.0.300',
+                    agconnect   : '1.7.3.302',
+                    push        : '6.11.0.300',
+                    base        : '6.9.0.300'
+            ],
+            gms                 : [
+                    auth          : '17.0.0',
+                    auth_api_phone: '17.4.0',
+                    base          : '18.0.1',
+                    basement      : '18.1.0',
+                    location      : '18.0.0',
+                    maps          : '17.0.0',
+                    tasks         : '18.0.2',
+                    safetynet: '17.0.1'
+            ],
+            mlKitFacedetection  : '16.0.2',
+            camerax             : '1.2.3',
+            uikit               : '1.93.1',
+            blurry              : '4.0.0',
+            appmetrica          : '7.9.0',
+            playCore            : '1.10.2',
+            desugaring          : '2.0.3',
+            default             : '1.0.0',
+            mobilesdk           : '4.3.39',
+            fazzysdk            : '7.6.2.13',
+            gibf6_sdk           : '2.0.5bc2170425',
+            gibf6_collection    : '1.0.5bc2170425',
+            pdfbox              : '2.0.9.0',
+            bizone              : '1.10.1.5153',
+            okio                : '2.10.0',
+            ebssdk              : '1.0.1',
+            ebssdkdebug         : '1.0.1-debug',
+            ebssdkmc            : '1.1.2.31',
+            ebsAdapter          : '1.1.0',
+            tapandpay           : '17.2.4',
+            mirpay              : '1.0.2',
+            unp                 : '2.5.2',
+            samsung             : [
+                    pass: '1.2.6',
+                    sdk : '1.0.0',
+                    pay : '2.17.0'
+            ],
+            splashscreen        : '1.0.1',
+            vtbCore: '1.47.6',
+            flexible            : [
+                    adapter: '5.1.0',
+                    ui     : '1.0.0'
+            ],
+            mirHce              : '1.13.5',
+            gravitysnaphelper   : '2.2.1',
+            javax_annotations   : '1.3.2',
+            jnimultiengine      : '2.4.1',
+            simpleXml           : '2.7.1',
+            digirub : '6.0.496',
+            certui  : '6.0.496',
+            vdkdui  : '6.0.496',
+            vdprofui: '6.0.496',
+            esiaSdk             : '1.0.1',
+            rustore             : [
+                    appupdate: '3.0.0',
+                    review   : '2.0.0'
+            ],
+            google              : [
+                    spi: '1.1.1',
+                    autoservice_ksp: '1.2.0'
+            ]
+    ]
+
+    javaVersion = JavaVersion.VERSION_21
+}
+
+allprojects {
+    plugins.withId('com.android.application') {
+        android {
+            compileOptions {
+                coreLibraryDesugaringEnabled true
+            }
+        }
+        dependencies {
+            coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:${versions.desugaring}"
+        }
+    }
+
+    plugins.withId('com.android.library') {
+        android {
+            compileOptions {
+                coreLibraryDesugaringEnabled true
+            }
+        }
+        dependencies {
+            coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:${versions.desugaring}"
+        }
+    }
+}
+
+apply from: "$rootDir/sonarqube.gradle"
