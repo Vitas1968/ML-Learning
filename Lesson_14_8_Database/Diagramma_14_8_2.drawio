@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="ER-диаграмма — Задание 2">
+    <mxGraphModel dx="1000" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- Department -->
+        <mxCell id="department" value="Кафедра (Department)
+- department_id (PK)
+- name
+- charter" style="shape=swimlane;fillColor=#dae8fc;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="180" height="100" as="geometry"/>
+        </mxCell>
+        
+        <!-- Teacher -->
+        <mxCell id="teacher" value="Преподаватель (Teacher)
+- teacher_id (PK)
+- last_name
+- first_name
+- middle_name
+- birth_date
+- phone
+- department_id (FK)" style="shape=swimlane;fillColor=#e1d5e7;" vertex="1" parent="1">
+          <mxGeometry x="320" y="30" width="220" height="150" as="geometry"/>
+        </mxCell>
+        
+        <!-- Course -->
+        <mxCell id="course" value="Курс (Course)
+- course_id (PK)
+- title
+- hours
+- teacher_id (FK)" style="shape=swimlane;fillColor=#ffe6cc;" vertex="1" parent="1">
+          <mxGeometry x="640" y="30" width="180" height="110" as="geometry"/>
+        </mxCell>
+        
+        <!-- Student -->
+        <mxCell id="student" value="Студент (Student)
+- student_id (PK)
+- last_name
+- first_name
+- middle_name
+- birth_date
+- phone" style="shape=swimlane;fillColor=#d5e8d4;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="200" height="140" as="geometry"/>
+        </mxCell>
+        
+        <!-- Enrollment -->
+        <mxCell id="enrollment" value="Зачисление (Enrollment)
+- enrollment_id (PK)
+- student_id (FK)
+- course_id (FK)
+- enrollment_date" style="shape=swimlane;fillColor=#f8cecc;" vertex="1" parent="1">
+          <mxGeometry x="360" y="240" width="210" height="110" as="geometry"/>
+        </mxCell>
+        
+        <!-- Assignment -->
+        <mxCell id="assignment" value="Домашнее задание (Assignment)
+- assignment_id (PK)
+- course_id (FK)
+- task" style="shape=swimlane;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="900" y="30" width="200" height="100" as="geometry"/>
+        </mxCell>
+        
+        <!-- StudentAssignment -->
+        <mxCell id="studentassignment" value="Выполнение задания (StudentAssignment)
+- student_assignment_id (PK)
+- student_id (FK)
+- assignment_id (FK)
+- grade" style="shape=swimlane;fillColor=#f5f5f5;" vertex="1" parent="1">
+          <mxGeometry x="850" y="220" width="230" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- Связи -->
+
+        <!-- Department 1:N Teacher -->
+        <mxCell id="rel1" style="endArrow=ERmany;html=1;rounded=0;edgeStyle=entityRelationEdgeStyle;" edge="1" parent="1" source="department" target="teacher">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Teacher 1:N Course -->
+        <mxCell id="rel2" style="endArrow=ERmany;html=1;rounded=0;edgeStyle=entityRelationEdgeStyle;" edge="1" parent="1" source="teacher" target="course">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Student 1:N Enrollment -->
+        <mxCell id="rel3" style="endArrow=ERmany;html=1;rounded=0;edgeStyle=entityRelationEdgeStyle;" edge="1" parent="1" source="student" target="enrollment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Course 1:N Enrollment -->
+        <mxCell id="rel4" style="endArrow=ERmany;html=1;rounded=0;edgeStyle=entityRelationEdgeStyle;" edge="1" parent="1" source="course" target="enrollment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Course 1:N Assignment -->
+        <mxCell id="rel5" style="endArrow=ERmany;html=1;rounded=0;edgeStyle=entityRelationEdgeStyle;" edge="1" parent="1" source="course" target="assignment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Assignment 1:N StudentAssignment -->
+        <mxCell id="rel6" style="endArrow=ERmany;html=1;rounded=0;edgeStyle=entityRelationEdgeStyle;" edge="1" parent="1" source="assignment" target="studentassignment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Student 1:N StudentAssignment -->
+        <mxCell id="rel7" style="endArrow=ERmany;html=1;rounded=0;edgeStyle=entityRelationEdgeStyle;" edge="1" parent="1" source="student" target="studentassignment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
